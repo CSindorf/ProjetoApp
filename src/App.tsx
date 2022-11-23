@@ -46,6 +46,15 @@ const App = () => {
             },
             headerShown: true
           }} />
+          <Stack.Screen name="Home Editora" component={HomeEditora} options={{
+            headerStyle: {
+              backgroundColor: '#2a8ba1',
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerShown: true
+          }} />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

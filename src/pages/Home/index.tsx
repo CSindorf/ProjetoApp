@@ -67,7 +67,7 @@ const Home = ({ navigation }) => {
 
     const navigateToEditorasHome = (id: any) => {
         setSelectedId(id);
-        navigation.navigate('HomeEditora', { editoraId: id, });
+        navigation.navigate('Home Editora', { editoraId: id, });
     }
 
     //get LIVROS
