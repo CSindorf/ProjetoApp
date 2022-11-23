@@ -8,13 +8,17 @@ export const styles = StyleSheet.create({
     paddingTop: 6,
   },
   item: {
-    padding: 10,
-    marginVertical: 8,
-    marginLeft: 8,
-    marginRight: 8,
+    marginHorizontal:10,
+    marginTop:20,
+    marginBottom:20,
+    padding:10,
+    width:150,
+    height:150,
+    justifyContent:'center',
+    flexDirection:"row",
+    alignItems:'center',
+    backgroundColor: '#6cc1d4',
     borderRadius: 5,
-    height: 150,
-    width: 150
   },
   title: {
     fontSize: 20,
@@ -32,16 +36,6 @@ export const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
     color: '#ffffff'
-  },
-  itemLivro: {
-    padding: 10,
-    marginVertical: 8,
-    backgroundColor: '#6cc1d4cd',
-    marginLeft: 8,
-    marginRight: 8,
-    borderRadius: 5,
-    height: 250,
-    width: 150,
   },
   image: {
     //flex: 1,
@@ -83,5 +77,19 @@ export const styles = StyleSheet.create({
     color: '#000',
     fontSize: 20,
     paddingLeft: 16,
-  }
+  },
+  cardLivro: {
+    marginHorizontal: 8,
+    padding:10,
+    justifyContent:'center',
+    margin:20,
+    borderRadius: 5,
+    borderColor: '#fff',
+    borderWidth: 2,
+    elevation: 5,
+    shadowColor: '#000',
+  },
+  itemLivro: {
+    height:300
+  },
 });

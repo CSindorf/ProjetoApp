@@ -1,9 +1,17 @@
 export type DadosLivroType = {
-    codigoLivro: number;
+    codigoLivro: number,
     nomeLivro: string,
-    dataLancamento: number,
+    dataLancamento: string,
     codigoIsbn: number,
     nomeImagem: string,
     nomeArquivoImagem: string,
-    urlImagem: string
-}
+    urlImagem: string,
+    editora: {
+      codigoEditora: number,
+      nomeEditora: string,
+    },
+    autor: {
+      codigoAutor: number,
+      nomeAutor: string
+    }
+  }

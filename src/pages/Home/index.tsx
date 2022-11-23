@@ -14,24 +14,40 @@ import Loading from '../../components/Loading';
 import { DataContext } from '../../context/DataContext';
 import { DadosEditoraType } from '../../models/DadosEditoraType';
 import { DadosLivroType } from '../../models/DadosLivroType';
+import { storeLocalData, incrementLocalData, retrieveLocalData, removeLocalData } from '../../services/LocalStorageService';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Button, Card, Title, Paragraph } from 'react-native-paper';
 
-const Item = ({ item, onPress, backgroundColor }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+const Item = ({ item, onPress }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item]}>
         <ImageBackground source={{ uri: item.urlImagem, }} resizeMode="cover" style={styles.image}>
             <Text style={[styles.title]}>{item.nomeEditora}</Text>
         </ImageBackground>
     </TouchableOpacity>
 );
 
-const Livros = ({ item, onPress, backgroundColor }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.itemLivro, backgroundColor]}>
-        <Image source={{ uri: item.urlImagem, }} resizeMode="contain" style={styles.image} />
-        <Text style={[styles.titleLivro]}>{item.nomeLivro}</Text>
-    </TouchableOpacity>
-);
+const CardLivro = ({ item }) => {
+    return (
+        <Card style={styles.cardLivro}>
+            <Card.Title title={item.nomeLivro} subtitle={item.editora.nomeEditora} />
+            <Card.Cover source={{ uri: item.urlImagem }} style={styles.itemLivro} />
+            <Card.Actions style={{ justifyContent: 'center' }}>
+                <Button onPress={() => addFavorite(item)}><Ionicons name='heart-circle' color='#2a8ba1' size={36} /></Button>
+                <Button onPress={() => addCart(item.codigoLivro)}><Ionicons name='cart' color='#2a8ba1' size={36} /></Button>
+            </Card.Actions>
+        </Card>
+    );
+}
+const addFavorite = (livro: DadosLivroType) => {
+    //console.log(`Favoritos: Livro selecionado: ${JSON.stringify(livro)}`);
+    incrementLocalData('favoritos', livro);
+}
+
+const addCart = (id: number) => {
+    console.log(`Carrinho: Livro selecionado: ${id}`);
+}
 
 const Home = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
@@ -39,6 +55,7 @@ const Home = ({ navigation }) => {
     const [dadosEditora, setDadosEditora] = useState<DadosEditoraType[]>([]); //dentro do <> está dizendo que esse useState é do tipo DadosEditoraType, que é um array
     const [dadosLivro, setDadosLivro] = useState<DadosLivroType[]>([]);
     const [selectedId, setSelectedId] = useState(null);
+    const [selectedLivro, setSelectedLivro] = useState(null);
 
     //quando a página carregar, ele usa esse método e pega os dados das editoras
     useEffect(() => {
@@ -76,18 +93,38 @@ const Home = ({ navigation }) => {
         //passando o token no cabeçalho da requisição, se não, não vai carregar nada
         AxiosInstance.get('/livros', {
             headers: { "Authorization": `Bearer ${dadosUsuario?.token}` }
-        }).then(
-            resultado => {
-                console.log('Dados dos Livros ' + JSON.stringify(resultado.data));
-                setDadosLivro(resultado.data);
-            }).catch((error) => {
-                console.log('Erro ' + JSON.stringify(error))
-            });
-        //colocando um timeout pra requiisção completar ou falhar
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000);
-    };
+        }).then(resultado => {
+            //console.log('Dados dos Livros: ' + JSON.stringify(resultado.data));
+
+            resultado.data.map((key: any, indice: number) => (
+                setDadosLivro(dadosLivro => [...dadosLivro, {
+                    codigoLivro: key.codigoLivro,
+                    nomeLivro: key.nomeLivro,
+                    dataLancamento: key.dataLancamento,
+                    codigoIsbn: key.codigoIsbn,
+                    nomeImagem: key.nomeImagem,
+                    nomeArquivoImagem: key.nomeArquivoImagem,
+                    urlImagem: key.urlImagem,
+                    editora: {
+                        codigoEditora: key.editoraDTO.codigoEditora,
+                        nomeEditora: key.editoraDTO.nomeEditora,
+                    },
+                    autor: {
+                        codigoAutor: key.autorDTO.codigoAutor,
+                        nomeAutor: key.autorDTO.nomeAutor,
+                    }
+                }])
+            ));
+
+            //colocando um timeout pra requiisção completar ou falhar
+            setTimeout(() => {
+                setLoading(false)
+            }, 2000);
+
+        }).catch((error) => {
+            console.log('Ocorreu um erro ao recuperar os dados dos Livros: ' + JSON.stringify(error));
+        });
+    }
 
     if (loading) {
         return (
@@ -96,25 +133,10 @@ const Home = ({ navigation }) => {
     }
 
     const renderItem = ({ item }) => {
-        const backgroundColor = item.codigoEditora === selectedId ? "#2a8ba1" : "#6cc1d4";
-
         return (
             <Item
                 item={item}
                 onPress={() => navigateToEditorasHome(item.codigoEditora)}
-                backgroundColor={{ backgroundColor }}
-            />
-        );
-    };
-
-    const renderLivro = ({ item }) => {
-        const backgroundColor = item.codigoLivro === selectedId ? "#2a8ba1" : "#6cc1d4cd";
-
-        return (
-            <Livros
-                item={item}
-                onPress={() => setSelectedId(item.codigoLivro)}
-                backgroundColor={{ backgroundColor }}
             />
         );
     };
@@ -122,35 +144,29 @@ const Home = ({ navigation }) => {
     return (
         <>
             <ImageBackground source={require('../../assets/image-background.jpg')} style={styles.imageBackground}>
-                <SafeAreaView style={styles.container}>
-                    <ScrollView>
-                        <View >
-                            <FlatList
-                                data={dadosEditora}
-                                renderItem={renderItem}
-                                keyExtractor={(item) => item.codigoEditora}
-                                extraData={selectedId}
-                                horizontal={true}
-                            />
-                        </View>
-                        <View >
-                            <Text style={styles.pageTitle}><Ionicons name='star' color='#2a8ba1' size={24} /> Recentes</Text>
-                            <FlatList
-                                data={dadosLivro}
-                                renderItem={renderLivro}
-                                keyExtractor={(livro) => livro.codigoLivro}
-                                extraData={selectedId}
-                                horizontal={true}
-                            />
-                        </View>
-                        <View style={[styles.destaque, styles.shadowProp]}>
-                            <Text style={styles.pageTitle}><Ionicons name='md-ribbon' color='#2a8ba1' size={24} /> Destaques</Text>
-                            <Image source={{ uri: "https://i.ibb.co/QvT9xqd/pig.png" }} resizeMode="contain" style={styles.image} />
-                            <Text style={[styles.destaqueTitle]}>Nome livro</Text>
-                            <Text style={[styles.destaqueAutor]}>Nome autor</Text>
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
+                <ScrollView style={styles.container}>
+                    <FlatList
+                        data={dadosEditora}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.codigoEditora}
+                        extraData={selectedId}
+                        horizontal={true}
+                    />
+                    <Text style={styles.pageTitle}><Ionicons name='star' color='#2a8ba1' size={24} /> Recentes</Text>
+                    <FlatList
+                        data={dadosLivro}
+                        renderItem={CardLivro}
+                        keyExtractor={(item, indice) => indice}
+                        extraData={setSelectedLivro}
+                        horizontal={true}
+                    />
+                    <View style={styles.destaque}>
+                        <Text style={styles.pageTitle}><Ionicons name='md-ribbon' color='#2a8ba1' size={24} /> Destaques</Text>
+                        <Image source={{ uri: "https://i.ibb.co/QvT9xqd/pig.png" }} resizeMode="contain" style={styles.image} />
+                        <Text style={[styles.destaqueTitle]}>Nome livro</Text>
+                        <Text style={[styles.destaqueAutor]}>Nome autor</Text>
+                    </View>
+                </ScrollView>
             </ImageBackground>
         </>
     );
