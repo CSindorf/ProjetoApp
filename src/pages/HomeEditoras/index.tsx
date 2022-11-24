@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     ImageBackground,
     Image,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import { styles } from './style';
 import AxiosInstance from '../../api/AxiosInstance';

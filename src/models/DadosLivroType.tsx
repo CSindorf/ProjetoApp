@@ -6,11 +6,11 @@ export type DadosLivroType = {
     nomeImagem: string,
     nomeArquivoImagem: string,
     urlImagem: string,
-    editora: {
+    editoraDTO: {
       codigoEditora: number,
       nomeEditora: string,
     },
-    autor: {
+    autorDTO: {
       codigoAutor: number,
       nomeAutor: string
     }

@@ -31,7 +31,7 @@ const Item = ({ item, onPress }) => (
 const CardLivro = ({ item }) => {
     return (
         <Card style={styles.cardLivro}>
-            <Card.Title title={item.nomeLivro} subtitle={item.editora.nomeEditora} />
+            <Card.Title title={item.nomeLivro} subtitle={item.editoraDTO.nomeEditora} />
             <Card.Cover source={{ uri: item.urlImagem }} style={styles.itemLivro} />
             <Card.Actions style={{ justifyContent: 'center' }}>
                 <Button onPress={() => addFavorite(item)}><Ionicons name='heart-circle' color='#2a8ba1' size={36} /></Button>
@@ -105,11 +105,11 @@ const Home = ({ navigation }) => {
                     nomeImagem: key.nomeImagem,
                     nomeArquivoImagem: key.nomeArquivoImagem,
                     urlImagem: key.urlImagem,
-                    editora: {
+                    editoraDTO: {
                         codigoEditora: key.editoraDTO.codigoEditora,
                         nomeEditora: key.editoraDTO.nomeEditora,
                     },
-                    autor: {
+                    autorDTO: {
                         codigoAutor: key.autorDTO.codigoAutor,
                         nomeAutor: key.autorDTO.nomeAutor,
                     }

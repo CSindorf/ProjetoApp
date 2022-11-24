@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import HomeEditoras from './pages/HomeEditoras';
 import HomeEditora from "./pages/HomeEditora";
+import HomeLivro from "./pages/Livro";
 
 const TabBottomNavigation = createBottomTabNavigator();
 const BottomNavigator = () => {
@@ -47,6 +48,15 @@ const App = () => {
             headerShown: true
           }} />
           <Stack.Screen name="Home Editora" component={HomeEditora} options={{
+            headerStyle: {
+              backgroundColor: '#2a8ba1',
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerShown: true
+          }} />
+          <Stack.Screen name="Home Livro" component={HomeLivro} options={{
             headerStyle: {
               backgroundColor: '#2a8ba1',
             },

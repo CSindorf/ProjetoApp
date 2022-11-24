@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   destaque: {
-    height: 350,
+    height: 300,
     margin: 20,
     borderRadius: 5,
     //height: Dimensions.get('window').height * 0.9,
@@ -88,6 +88,7 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     elevation: 5,
     shadowColor: '#000',
+    width:250
   },
   itemLivro: {
     height:300
