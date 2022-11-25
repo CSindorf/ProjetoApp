@@ -1,26 +1,18 @@
-import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {DataProvider} from './context/DataContext';
-import {
-  CarrinhoContext,
-  CarrinhoProvider,
-  useCarrinho,
-} from './context/CarrinhoContext';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import HomeEditoras from './pages/HomeEditoras';
-import HomeEditora from './pages/HomeEditora';
-import HomeLivro from './pages/Livro';
-import Carrinho from './pages/Carrinho';
+import React from 'react';
 
-import Badge from './components/Badge';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { DataProvider } from './context/DataContext';
+import Favoritos from './pages/Favoritos';
+import Home from './pages/Home';
+import HomeEditora from './pages/HomeEditora';
+import HomeEditoras from './pages/HomeEditoras';
+import HomeLivro from './pages/Livro';
+import Login from './pages/Login';
 
 const TabBottomNavigation = createBottomTabNavigator();
-
 const BottomNavigator = () => {
   return (
     <TabBottomNavigation.Navigator
@@ -45,23 +37,16 @@ const BottomNavigator = () => {
           headerShown: false,
         }}
       />
-      <TabBottomNavigation.Screen
+         <TabBottomNavigation.Screen
         name="Favoritos"
-        component={Home}
+        component={Favoritos}
         options={{
-          tabBarIcon: () => <Ionicons name="heart" color="white" size={24} />,
-          headerShown: false,
-        }}
-      />
-      <TabBottomNavigation.Screen
-        name="Carrinho"
-        component={Carrinho}
-        options={{
-          tabBarIcon: () => <Badge />,
+          tabBarIcon: () => <Ionicons name="heart-circle" color="white" size={24} />,
           headerShown: false,
         }}
       />
     </TabBottomNavigation.Navigator>
+    
   );
 };
 
@@ -69,56 +54,54 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <DataProvider>
-      <CarrinhoProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Livraria"
-              component={BottomNavigator}
-              options={{
-                headerStyle: {
-                  backgroundColor: '#2a8ba1',
-                },
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerShown: true,
-              }}
-            />
-            <Stack.Screen
-              name="Home Editora"
-              component={HomeEditora}
-              options={{
-                headerStyle: {
-                  backgroundColor: '#2a8ba1',
-                },
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerShown: true,
-              }}
-            />
-            <Stack.Screen
-              name="Home Livro"
-              component={HomeLivro}
-              options={{
-                headerStyle: {
-                  backgroundColor: '#2a8ba1',
-                },
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerShown: true,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </CarrinhoProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Livraria"
+            component={BottomNavigator}
+            options={{
+              headerStyle: {
+                backgroundColor: '#2a8ba1',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="Home Editora"
+            component={HomeEditora}
+            options={{
+              headerStyle: {
+                backgroundColor: '#2a8ba1',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="Home Livro"
+            component={HomeLivro}
+            options={{
+              headerStyle: {
+                backgroundColor: '#2a8ba1',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerShown: true,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </DataProvider>
   );
 };

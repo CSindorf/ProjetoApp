@@ -1,32 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  View,
-  Text,
+  ImageBackground, Text,
   TextInput,
-  TouchableOpacity,
-  ImageBackground
+  TouchableOpacity, View
 } from 'react-native';
-import { styles } from './style';
 import AxiosInstance from '../../api/AxiosInstance';
-import Loading from '../../components/Loading';
 import Alerta from '../../components/Alert';
+import Loading from '../../components/Loading';
 import { DataContext } from '../../context/DataContext';
+import { styles } from './style';
 
-const Login = ({ navigation }) => {
-
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
-  const { armazenaDadosUsuario } = useContext(DataContext);
+  const {armazenaDadosUsuario} = useContext(DataContext);
 
   const handlelogin = async () => {
-    setLoading(true)
+    setLoading(true);
     var tokenJwt: any = null;
     //esse log abaixo está usando para mostrar no log os dados digitados nos campos email e senha
     //console.log(`Email: ${email} - Senha: ${senha}`);
 
     try {
-      const retorno = await AxiosInstance.post('/auth/login', { email: email, password: senha });
+      const retorno = await AxiosInstance.post('/auth/login', {
+        email: email,
+        password: senha,
+      });
 
       if (retorno.status === 200) {
         //se der sucesso na requisição, ela retorna só o data, não tudo
@@ -35,26 +35,23 @@ const Login = ({ navigation }) => {
         //está colocando na variável o conteúdo do retorno.data
         tokenJwt = retorno.data;
         //passando pro método o token jwt
-        armazenaDadosUsuario(tokenJwt["jwt-token"])
+        armazenaDadosUsuario(tokenJwt['jwt-token']);
 
         navigation.navigate('Livraria');
       }
-
     } catch (error) {
       //console.log('Erro ao autenticar - ' + JSON.stringify(error));
-      Alerta('Oops!', 'Login ou senha errados')
+      Alerta('Oops!', 'Login ou senha errados');
     }
 
     //colocando um timeout pra requiisção completar ou falhar
     setTimeout(() => {
-      setLoading(false)
+      setLoading(false);
     }, 2000);
-  }
+  };
 
   if (loading) {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
 
   //toda vez que digita algo na página ele "renderiza" e roda esse useEffect
@@ -74,10 +71,23 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/image-background-login.jpg')} style={styles.imageBackground}>
+      <ImageBackground
+        source={require('../../assets/image-background-login.jpg')}
+        style={styles.imageBackground}>
         <Text style={styles.titulo}>Bem-vindo</Text>
-        <TextInput style={styles.input} placeholder='E-mail' onChangeText={setEmail} value={email} />
-        <TextInput style={styles.input} placeholder='Senha' secureTextEntry={true} onChangeText={setSenha} value={senha} />
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail"
+          onChangeText={setEmail}
+          value={email}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          secureTextEntry={true}
+          onChangeText={setSenha}
+          value={senha}
+        />
         <TouchableOpacity style={styles.botao} onPress={() => handlelogin()}>
           <Text style={styles.textoBotao}>Login</Text>
         </TouchableOpacity>

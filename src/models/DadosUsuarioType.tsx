@@ -1,6 +1,6 @@
-export type DadosUsuarioType ={
-    id:number;
-    nome:string;
-    email:string;
-    token:string;
-}
+export type DadosUsuarioType = {
+  id: number;
+  nome: string;
+  email: string;
+  token: string;
+};

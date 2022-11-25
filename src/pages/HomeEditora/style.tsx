@@ -6,23 +6,22 @@ export const styles = StyleSheet.create({
     //backgroundColor: '#6cc1d4',
     //marginTop: StatusBar.currentHeight || 0,
     paddingTop: 6,
-
   },
   title: {
     fontSize: 15,
-    textAlign: "center",
-    fontWeight: "bold",
+    textAlign: 'center',
+    fontWeight: 'bold',
     padding: 5,
     margin: 10,
-    color: '#000000'
+    color: '#000000',
   },
   image: {
     //flex: 1,
-    justifyContent: "center",
-    height: 130
+    justifyContent: 'center',
+    height: 130,
   },
   imageBackground: {
-    resizeMode: "repeat",
+    resizeMode: 'repeat',
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
@@ -42,9 +41,9 @@ export const styles = StyleSheet.create({
   },
   pageTitle: {
     fontSize: 30,
-    textAlign: "center",
-    fontWeight: "bold",
+    textAlign: 'center',
+    fontWeight: 'bold',
     color: '#000',
-    padding: 16
+    padding: 16,
   },
 });

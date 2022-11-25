@@ -1,30 +1,22 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  View,
-  Text,
   FlatList,
-  TouchableOpacity,
-  ImageBackground,
   Image,
+  ImageBackground,
   ScrollView,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {styles} from './style';
+import { Button, Card } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import AxiosInstance from '../../api/AxiosInstance';
 import Loading from '../../components/Loading';
-import {DataContext} from '../../context/DataContext';
-import {useCarrinho} from '../../context/CarrinhoContext';
-import {DadosEditoraType} from '../../models/DadosEditoraType';
-import {DadosLivroType} from '../../models/DadosLivroType';
-import {
-  storeLocalData,
-  incrementLocalData,
-  retrieveLocalData,
-  removeLocalData,
-} from '../../services/LocalStorageService';
-import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Button, Card, Title, Paragraph} from 'react-native-paper';
+import { DataContext } from '../../context/DataContext';
+import { DadosEditoraType } from '../../models/DadosEditoraType';
+import { DadosLivroType } from '../../models/DadosLivroType';
+import { incrementLocalData } from '../../services/LocalStorageService';
+import { styles } from './style';
 
 const Item = ({item, onPress}) => (
   <TouchableOpacity onPress={onPress} style={[styles.item]}>
@@ -37,13 +29,33 @@ const Item = ({item, onPress}) => (
   </TouchableOpacity>
 );
 
-const addFavorite = (livro: DadosLivroType) => {
-  //console.log(`Favoritos: Livro selecionado: ${JSON.stringify(livro)}`);
-  incrementLocalData('favoritos', livro);
+const CardLivro = ({item}) => {
+  return (
+    <Card style={styles.cardLivro}>
+      <Card.Title
+        title={item.nomeLivro}
+        subtitle={item.editoraDTO.nomeEditora}
+      />
+      <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} />
+      <Card.Actions style={{justifyContent: 'center'}}>
+        <Button onPress={() => addFavorite(item)}>
+          <Ionicons name="heart-circle" color="#2a8ba1" size={36} />
+        </Button>
+        <Button onPress={() => addCart(item.codigoLivro)}>
+          <Ionicons name="cart" color="#2a8ba1" size={36} />
+        </Button>
+      </Card.Actions>
+    </Card>
+  );
 };
 
-const addCart = (id: number, imagem: string, nome: string) => {
-  console.log(`Carrinho: Livro selecionado: ${id} ${imagem} ${nome}`);
+const addFavorite = (livro: DadosLivroType) => {
+  incrementLocalData('favoritos', livro) 
+  console.warn(livro)
+}
+
+const addCart = (id: number) => {
+  console.log(`Carrinho: Livro selecionado: ${id}`);
 };
 
 const Home = ({navigation}) => {
@@ -53,45 +65,16 @@ const Home = ({navigation}) => {
   const [dadosLivro, setDadosLivro] = useState<DadosLivroType[]>([]);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedLivro, setSelectedLivro] = useState(null);
-  const {aumentarQuantidade, cartItems} = useCarrinho();
+
+
+
+
 
   //quando a página carregar, ele usa esse método e pega os dados das editoras
   useEffect(() => {
     getAllEditoras();
     getAllLivros();
   }, []);
-
-  const CardLivro = ({item}) => {
-    return (
-      <Card style={styles.cardLivro}>
-        <Card.Title
-          title={item.nomeLivro}
-          subtitle={item.editoraDTO.nomeEditora}
-        />
-        <TouchableOpacity onPress={() => navigateToLivro(item.codigoLivro)}>
-          <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} />
-          {/* <Image
-            source={{uri: item.urlImagem}}
-            style={styles.itemLivro}></Image> */}
-        </TouchableOpacity>
-        <Card.Actions style={{justifyContent: 'center'}}>
-          <Button onPress={() => addFavorite(item)}>
-            <Ionicons name="heart-circle" color="#2a8ba1" size={36} />
-          </Button>
-          <Button
-            onPress={() =>
-              aumentarQuantidade(
-                item.codigoLivro,
-                item.urlImagem,
-                item.nomeLivro,
-              )
-            }>
-            <Ionicons name="cart" color="#2a8ba1" size={36} />
-          </Button>
-        </Card.Actions>
-      </Card>
-    );
-  };
 
   //get EDITORAS
   const getAllEditoras = async () => {
@@ -117,10 +100,6 @@ const Home = ({navigation}) => {
     setSelectedId(id);
     navigation.navigate('Home Editora', {editoraId: id});
   };
-  const navigateToLivro = (id: any) => {
-    setSelectedLivro(id);
-    navigation.navigate('Home Livro', {codigoLivro: id});
-  };
 
   //get LIVROS
   const getAllLivros = async () => {
@@ -132,11 +111,9 @@ const Home = ({navigation}) => {
       .then(resultado => {
         //console.log('Dados dos Livros: ' + JSON.stringify(resultado.data));
 
-        setDadosLivro([]);
-        let arrayLivros = resultado.data;
-        arrayLivros.map(key =>
-          setDadosLivro(current => [
-            ...current,
+        resultado.data.map((key: any, indice: number) =>
+          setDadosLivro(dadosLivro => [
+            ...dadosLivro,
             {
               codigoLivro: key.codigoLivro,
               nomeLivro: key.nomeLivro,
