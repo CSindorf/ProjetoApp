@@ -22,6 +22,7 @@ import { styles } from './style';
 import Loading from '../../components/Loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+
 const HomeEditora = ({route, navigation}) => {
     const {editoraId} = route.params
     

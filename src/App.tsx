@@ -27,6 +27,10 @@ const BottomNavigator = () => {
         tabBarIcon: () => (<Ionicons name='albums' color='white' size={24} />),
         headerShown: false
       }} />
+      <TabBottomNavigation.Screen name="Favoritos" component={Home} options={{
+        tabBarIcon: () => (<Ionicons name='heart' color='white' size={24} />),
+        headerShown: false
+      }} />
     </TabBottomNavigation.Navigator>
   );
 }

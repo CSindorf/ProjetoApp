@@ -28,18 +28,7 @@ const Item = ({ item, onPress }) => (
     </TouchableOpacity>
 );
 
-const CardLivro = ({ item }) => {
-    return (
-        <Card style={styles.cardLivro}>
-            <Card.Title title={item.nomeLivro} subtitle={item.editoraDTO.nomeEditora} />
-            <Card.Cover source={{ uri: item.urlImagem }} style={styles.itemLivro} />
-            <Card.Actions style={{ justifyContent: 'center' }}>
-                <Button onPress={() => addFavorite(item)}><Ionicons name='heart-circle' color='#2a8ba1' size={36} /></Button>
-                <Button onPress={() => addCart(item.codigoLivro)}><Ionicons name='cart' color='#2a8ba1' size={36} /></Button>
-            </Card.Actions>
-        </Card>
-    );
-}
+
 const addFavorite = (livro: DadosLivroType) => {
     //console.log(`Favoritos: Livro selecionado: ${JSON.stringify(livro)}`);
     incrementLocalData('favoritos', livro);
@@ -62,6 +51,21 @@ const Home = ({ navigation }) => {
         getAllEditoras();
         getAllLivros();
     }, []);
+
+    const CardLivro = ({ item }) => {
+        return (
+            <Card style={styles.cardLivro}>
+                <Card.Title title={item.nomeLivro} subtitle={item.editoraDTO.nomeEditora} />
+                <TouchableOpacity onPress={() => navigateToLivro(item.codigoLivro)}>
+                <Card.Cover source={{ uri: item.urlImagem }} style={styles.itemLivro} />
+                </TouchableOpacity>
+                <Card.Actions style={{ justifyContent: 'center' }}>
+                    <Button onPress={() => addFavorite(item)}><Ionicons name='heart-circle' color='#2a8ba1' size={36} /></Button>
+                    <Button onPress={() => addCart(item.codigoLivro)}><Ionicons name='cart' color='#2a8ba1' size={36} /></Button>
+                </Card.Actions>
+            </Card>
+        );
+    }
 
     //get EDITORAS
     const getAllEditoras = async () => {
@@ -86,6 +90,10 @@ const Home = ({ navigation }) => {
         setSelectedId(id);
         navigation.navigate('Home Editora', { editoraId: id, });
     }
+    const navigateToLivro = (id: any) => {
+        setSelectedLivro(id);
+        navigation.navigate('Home Livro', { codigoLivro: id });
+    }
 
     //get LIVROS
     const getAllLivros = async () => {
@@ -96,8 +104,10 @@ const Home = ({ navigation }) => {
         }).then(resultado => {
             //console.log('Dados dos Livros: ' + JSON.stringify(resultado.data));
 
-            resultado.data.map((key: any, indice: number) => (
-                setDadosLivro(dadosLivro => [...dadosLivro, {
+            setDadosLivro([]);
+            let arrayLivros = resultado.data;
+            arrayLivros.map(key => (
+                setDadosLivro(current => [...current, {
                     codigoLivro: key.codigoLivro,
                     nomeLivro: key.nomeLivro,
                     dataLancamento: key.dataLancamento,
