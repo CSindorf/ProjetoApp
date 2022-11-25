@@ -12,10 +12,9 @@ export type DadosCarrinhoProviderType = {
 };
 
 export type CarrinhoContextType = {
-  getQuantidade: (id: number) => number;
+  getTotalCarrinho: () => number;
   aumentarQuantidade: (id: number) => void;
   diminuirQuantidade: (id: number) => void;
   removerItem: (id: number) => void;
-  mostraItens: () => void;
   cartItems: any;
 };

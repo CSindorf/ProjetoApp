@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,52 +8,52 @@ export const styles = StyleSheet.create({
     paddingTop: 6,
   },
   item: {
-    marginHorizontal:10,
-    marginTop:20,
-    marginBottom:20,
-    padding:10,
-    width:150,
-    height:150,
-    justifyContent:'center',
-    flexDirection:"row",
-    alignItems:'center',
+    marginHorizontal: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    padding: 10,
+    width: 150,
+    height: 150,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#6cc1d4',
     borderRadius: 5,
   },
   title: {
     fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
+    textAlign: 'center',
+    fontWeight: 'bold',
     backgroundColor: '#6cc1d4cd',
     padding: 5,
     margin: 10,
-    color: '#ffffff'
+    color: '#ffffff',
   },
   titleLivro: {
     fontSize: 20,
-    textAlign: "center",
-    fontWeight: "bold",
+    textAlign: 'center',
+    fontWeight: 'bold',
     padding: 5,
     margin: 5,
-    color: '#ffffff'
+    color: '#ffffff',
   },
   image: {
     //flex: 1,
-    justifyContent: "center",
-    height: 130
+    justifyContent: 'center',
+    height: 130,
   },
   imageBackground: {
-    resizeMode: "repeat",
+    resizeMode: 'repeat',
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
   pageTitle: {
     fontSize: 20,
-    textAlign: "left",
-    fontWeight: "bold",
+    textAlign: 'left',
+    fontWeight: 'bold',
     color: '#000',
     padding: 16,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   destaque: {
     height: 300,
@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
     color: '#000',
     fontSize: 20,
     padding: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   destaqueAutor: {
     color: '#000',
@@ -80,17 +80,17 @@ export const styles = StyleSheet.create({
   },
   cardLivro: {
     marginHorizontal: 8,
-    padding:10,
-    justifyContent:'center',
-    margin:20,
+    padding: 10,
+    justifyContent: 'center',
+    margin: 20,
     borderRadius: 5,
     borderColor: '#fff',
     borderWidth: 2,
     elevation: 5,
     shadowColor: '#000',
-    width:250
+    width: 250,
   },
   itemLivro: {
-    height:300
+    height: 300,
   },
 });

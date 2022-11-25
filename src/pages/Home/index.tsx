@@ -53,14 +53,7 @@ const Home = ({navigation}) => {
   const [dadosLivro, setDadosLivro] = useState<DadosLivroType[]>([]);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedLivro, setSelectedLivro] = useState(null);
-  const {
-    getQuantidade,
-    aumentarQuantidade,
-    diminuirQuantidade,
-    removerItem,
-    mostraItens,
-    cartItems,
-  } = useCarrinho();
+  const {aumentarQuantidade, cartItems} = useCarrinho();
 
   //quando a página carregar, ele usa esse método e pega os dados das editoras
   useEffect(() => {
@@ -77,6 +70,9 @@ const Home = ({navigation}) => {
         />
         <TouchableOpacity onPress={() => navigateToLivro(item.codigoLivro)}>
           <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} />
+          {/* <Image
+            source={{uri: item.urlImagem}}
+            style={styles.itemLivro}></Image> */}
         </TouchableOpacity>
         <Card.Actions style={{justifyContent: 'center'}}>
           <Button onPress={() => addFavorite(item)}>

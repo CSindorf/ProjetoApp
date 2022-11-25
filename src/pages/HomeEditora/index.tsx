@@ -37,14 +37,7 @@ const HomeEditora = ({route, navigation}) => {
 
   const [dadosEditora, setDadosEditora] = useState<DadosEditoraType>();
   const {dadosUsuario} = useContext(DataContext);
-  const {
-    getQuantidade,
-    aumentarQuantidade,
-    diminuirQuantidade,
-    removerItem,
-    mostraItens,
-    cartItems,
-  } = useCarrinho();
+  const {aumentarQuantidade, cartItems} = useCarrinho();
   const [dadosLivro, setDadosLivro] = useState<DadosLivroType[]>([]);
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [loading, setLoading] = useState(false);

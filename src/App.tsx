@@ -1,9 +1,13 @@
-import React from 'react';
-
+import React, {useContext} from 'react';
+import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {DataProvider} from './context/DataContext';
-import {CarrinhoProvider} from './context/CarrinhoContext';
+import {
+  CarrinhoContext,
+  CarrinhoProvider,
+  useCarrinho,
+} from './context/CarrinhoContext';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './pages/Home';
@@ -13,7 +17,10 @@ import HomeEditora from './pages/HomeEditora';
 import HomeLivro from './pages/Livro';
 import Carrinho from './pages/Carrinho';
 
+import Badge from './components/Badge';
+
 const TabBottomNavigation = createBottomTabNavigator();
+
 const BottomNavigator = () => {
   return (
     <TabBottomNavigation.Navigator
@@ -50,7 +57,7 @@ const BottomNavigator = () => {
         name="Carrinho"
         component={Carrinho}
         options={{
-          tabBarIcon: () => <Ionicons name="cart" color="white" size={24} />,
+          tabBarIcon: () => <Badge />,
           headerShown: false,
         }}
       />

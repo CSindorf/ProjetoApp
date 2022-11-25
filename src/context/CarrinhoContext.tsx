@@ -13,9 +13,16 @@ export function useCarrinho() {
 
 export const CarrinhoProvider = ({children}: DadosCarrinhoProviderType) => {
   const [cartItems, setCartItems] = useState<DadosCarrinhoType[]>([]);
+  const [badgeTotal, setBadgeTotal] = useState(0);
 
-  function getQuantidade(id: number) {
-    return cartItems.find(item => item.id === id)?.qtd || 0;
+  function getTotalCarrinho() {
+    let total = 0;
+    cartItems.forEach(item => {
+      total += item.qtd;
+    });
+    setBadgeTotal(total);
+
+    return badgeTotal;
   }
 
   function aumentarQuantidade(id: number, imagem: string, nome: string) {
@@ -32,7 +39,6 @@ export const CarrinhoProvider = ({children}: DadosCarrinhoProviderType) => {
         });
       }
     });
-    console.log(cartItems);
   }
 
   function diminuirQuantidade(id: number) {
@@ -57,16 +63,11 @@ export const CarrinhoProvider = ({children}: DadosCarrinhoProviderType) => {
     });
   }
 
-  function mostraItens() {
-    console.log(cartItems);
-    return cartItems;
-  }
-
   return (
     <CarrinhoContext.Provider
       value={{
         cartItems,
-        getQuantidade,
+        getTotalCarrinho,
         aumentarQuantidade,
         diminuirQuantidade,
         removerItens,

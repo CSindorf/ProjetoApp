@@ -4,19 +4,19 @@ import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {CarrinhoContext, useCarrinho} from '../../context/CarrinhoContext';
 
 const Carrinho = () => {
-  const {getQuantidade, aumentarQuantidade, diminuirQuantidade, removerItem} =
+  const {aumentarQuantidade, diminuirQuantidade, getTotalCarrinho, removerItem} =
     useContext(CarrinhoContext);
 
   const {cartItems} = useCarrinho();
 
-  useEffect(() => {
-    console.log('Carrinho: ' + cartItems);
-  }, []);
-
   return (
     <ScrollView>
       <View
-        style={{justifyContent: 'center', alignItems: 'center', marginTop: 50}}>
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 50,
+        }}>
         {cartItems.length === 0 && <Text>Não há itens no carrinho</Text>}
         <View>
           {cartItems.map(item => (
@@ -27,10 +27,15 @@ const Carrinho = () => {
                 justifyContent: 'space-between',
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 15,
+                marginBottom: 20,
               }}>
               <Image
-                style={{width: 100, height: 100, marginEnd: 15}}
+                style={{
+                  width: 80,
+                  height: 110,
+                  marginEnd: 15,
+                  resizeMode: 'center',
+                }}
                 source={{
                   uri: item.imagem,
                 }}
@@ -41,6 +46,7 @@ const Carrinho = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'space-between',
+                  width: 180,
                 }}>
                 <Text
                   style={{
@@ -92,6 +98,9 @@ const Carrinho = () => {
                     <Text>+</Text>
                   </TouchableOpacity>
                 </View>
+              </View>
+              <View>
+                <Text>{getTotalCarrinho()}</Text>
               </View>
             </View>
           ))}

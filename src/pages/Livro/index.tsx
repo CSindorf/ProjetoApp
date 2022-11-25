@@ -28,14 +28,7 @@ const HomeLivro = ({route, navigation}) => {
   //-------------------------------------
   //Dados Editora
   const {dadosUsuario} = useContext(DataContext);
-  const {
-    getQuantidade,
-    aumentarQuantidade,
-    diminuirQuantidade,
-    removerItem,
-    mostraItens,
-    cartItems,
-  } = useCarrinho();
+  const {aumentarQuantidade, cartItems} = useCarrinho();
   const [dadosLivro, setDadosLivro] = useState<DadosLivroType>();
   const [loading, setLoading] = useState(false);
 
