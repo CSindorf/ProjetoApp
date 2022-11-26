@@ -1,35 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-    FlatList,
-    Image,
-    ImageBackground,
-    Text,
-    TouchableOpacity,
-    View
+  FlatList,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import AxiosInstance from '../../api/AxiosInstance';
 
-import { DataContext } from '../../context/DataContext';
+import {DataContext} from '../../context/DataContext';
+import {useCarrinho} from '../../context/CarrinhoContext';
 
-import { Button } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Button} from 'react-native-paper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Loading from '../../components/Loading';
-import { DadosEditoraType } from '../../models/DadosEditoraType';
-import { DadosLivroType } from '../../models/DadosLivroType';
-import { incrementLocalData } from '../../services/LocalStorageService';
-import { styles } from './style';
+import {DadosEditoraType} from '../../models/DadosEditoraType';
+import {DadosLivroType} from '../../models/DadosLivroType';
+import {incrementLocalData} from '../../services/LocalStorageService';
+import {styles} from './style';
 
 const HomeEditora = ({route, navigation}) => {
   const {editoraId} = route.params;
-
-  console.log(editoraId);
 
   //-------------------------------------
   //Dados Editora
 
   const [dadosEditora, setDadosEditora] = useState<DadosEditoraType>();
   const {dadosUsuario} = useContext(DataContext);
+  const {aumentarQuantidade, cartItems} = useCarrinho();
   const [dadosLivro, setDadosLivro] = useState<DadosLivroType[]>([]);
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,10 @@ const HomeEditora = ({route, navigation}) => {
         <Button onPress={() => addFavorite(item)}>
           <Ionicons name="heart-circle" color="#2a8ba1" size={20} />
         </Button>
-        <Button onPress={() => addCart(item.codigoLivro)}>
+        <Button
+          onPress={() =>
+            aumentarQuantidade(item.codigoLivro, item.urlImagem, item.nomeLivro)
+          }>
           <Ionicons name="cart" color="#2a8ba1" size={20} />
         </Button>
       </View>

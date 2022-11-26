@@ -36,7 +36,7 @@ const Carrinho = () => {
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: 50,
-            flex: 1,
+            marginBottom: 150,
           }}>
           {cartItems.length === 0 && (
             <Text style={{fontSize: 30, fontWeight: '500'}}>
@@ -101,13 +101,13 @@ const Carrinho = () => {
                         // BOTAO
                         width: 40,
                         height: 22,
-                        backgroundColor: '#ccc',
+                        backgroundColor: '#7fb9c6',
                         borderRadius: 50,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
                       onPress={() => diminuirQuantidade(item.id)}>
-                      <Text>-</Text>
+                      <Text style={{fontWeight: 'bold', color: '#fff'}}>-</Text>
                     </TouchableOpacity>
                     <Text
                       style={{
@@ -124,13 +124,13 @@ const Carrinho = () => {
                         //BOTAO
                         width: 40,
                         height: 22,
-                        backgroundColor: '#ccc',
+                        backgroundColor: '#7fb9c6',
                         borderRadius: 50,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
                       onPress={() => aumentarQuantidade(item.id)}>
-                      <Text>+</Text>
+                      <Text style={{fontWeight: 'bold', color: '#fff'}}>+</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -162,14 +162,16 @@ const Carrinho = () => {
                     alignItems: 'center',
                     marginTop: 18,
                     marginBottom: 18,
-                    paddingTop: 15,
-                    paddingBottom: 15,
+                    paddingTop: 18,
+                    paddingBottom: 18,
                     backgroundColor: '#2a8ba1',
+                    borderRadius: 5,
                   }}>
                   {loading ? (
                     <LoadingSmall size="small" color="#fff" />
                   ) : (
-                    <Text style={{color: '#fff', fontWeight: '600'}}>
+                    <Text
+                      style={{color: '#fff', fontWeight: '600', fontSize: 18}}>
                       Finalizar Pedido
                     </Text>
                   )}
