@@ -92,5 +92,6 @@ export const styles = StyleSheet.create({
   },
   itemLivro: {
     height: 300,
+    resizeMode: 'center',
   },
 });

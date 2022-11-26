@@ -57,10 +57,11 @@ export const CarrinhoProvider = ({children}: DadosCarrinhoProviderType) => {
     });
   }
 
-  function removerItens(id: number) {
-    setCartItems(itensAtuais => {
-      return itensAtuais.filter(item => item.id !== id);
-    });
+  function removerItens() {
+    // setCartItems(itensAtuais => {
+    //   return itensAtuais.filter(item => item.id !== id);
+    // });
+    setCartItems([]);
   }
 
   return (

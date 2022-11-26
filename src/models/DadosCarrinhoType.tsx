@@ -15,6 +15,6 @@ export type CarrinhoContextType = {
   getTotalCarrinho: () => number;
   aumentarQuantidade: (id: number) => void;
   diminuirQuantidade: (id: number) => void;
-  removerItem: (id: number) => void;
+  removerItens: () => void;
   cartItems: any;
 };

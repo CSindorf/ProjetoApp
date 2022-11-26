@@ -42,10 +42,6 @@ const addFavorite = (livro: DadosLivroType) => {
   incrementLocalData('favoritos', livro);
 };
 
-const addCart = (id: number, imagem: string, nome: string) => {
-  console.log(`Carrinho: Livro selecionado: ${id} ${imagem} ${nome}`);
-};
-
 const Home = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const {dadosUsuario} = useContext(DataContext);
@@ -69,10 +65,10 @@ const Home = ({navigation}) => {
           subtitle={item.editoraDTO.nomeEditora}
         />
         <TouchableOpacity onPress={() => navigateToLivro(item.codigoLivro)}>
-          <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} />
-          {/* <Image
+          {/* <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} /> */}
+          <Image
             source={{uri: item.urlImagem}}
-            style={styles.itemLivro}></Image> */}
+            style={styles.itemLivro}></Image>
         </TouchableOpacity>
         <Card.Actions style={{justifyContent: 'center'}}>
           <Button onPress={() => addFavorite(item)}>
