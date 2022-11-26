@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -6,8 +6,7 @@ export const styles = StyleSheet.create({
     //backgroundColor: '#6cc1d4',
     //marginTop: StatusBar.currentHeight || 0,
     paddingTop: 6,
-    marginBottom:130
-    
+    marginBottom: 130,
   },
   item: {
     marginHorizontal: 10,
