@@ -189,7 +189,7 @@ const Home = ({navigation}) => {
             extraData={setSelectedLivro}
             horizontal={true}
           />
-          <View style={styles.destaque}>
+          {/* <View style={styles.destaque}>
             <Text style={styles.pageTitle}>
               <Ionicons name="md-ribbon" color="#2a8ba1" size={24} /> Destaques
             </Text>
@@ -200,7 +200,7 @@ const Home = ({navigation}) => {
             />
             <Text style={[styles.destaqueTitle]}>Nome livro</Text>
             <Text style={[styles.destaqueAutor]}>Nome autor</Text>
-          </View>
+          </View> */}
         </ScrollView>
       </ImageBackground>
     </>
