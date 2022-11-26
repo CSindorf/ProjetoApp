@@ -42,7 +42,7 @@ const BottomNavigator = () => {
         component={Favoritos}
         options={{
           tabBarIcon: () => <Ionicons name="heart-circle" color="white" size={24} />,
-          headerShown: false,
+          title: 'Favoritos',
         }}
       />
     </TabBottomNavigation.Navigator>
@@ -65,6 +65,7 @@ const App = () => {
             name="Livraria"
             component={BottomNavigator}
             options={{
+              title: '',
               headerStyle: {
                 backgroundColor: '#2a8ba1',
               },
@@ -78,6 +79,7 @@ const App = () => {
             name="Home Editora"
             component={HomeEditora}
             options={{
+              title: 'Editora',
               headerStyle: {
                 backgroundColor: '#2a8ba1',
               },
@@ -91,6 +93,7 @@ const App = () => {
             name="Home Livro"
             component={HomeLivro}
             options={{
+              title: 'Livro',
               headerStyle: {
                 backgroundColor: '#2a8ba1',
               },

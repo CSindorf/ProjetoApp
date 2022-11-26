@@ -29,28 +29,6 @@ const Item = ({item, onPress}) => (
   </TouchableOpacity>
 );
 
-const CardLivro = ({item}) => {
-  return (
-    <Card style={styles.cardLivro}>
-      <Card.Title
-        title={item.nomeLivro}
-        subtitle={item.editoraDTO.nomeEditora}
-      />
-      <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} />
-      <Card.Actions style={{justifyContent: 'center'}}>
-        <Button onPress={() => addFavorite(item)}>
-          <Ionicons name="heart-circle" color="#2a8ba1" size={36} />
-        </Button>
-        <Button onPress={() => addCart(item.codigoLivro)}>
-          <Ionicons name="cart" color="#2a8ba1" size={36} />
-        </Button>
-      </Card.Actions>
-    </Card>
-  );
-};
-
-<<<<<<< HEAD
-=======
 const addFavorite = (livro: DadosLivroType) => {
   incrementLocalData('favoritos', livro) 
   console.warn(livro)
@@ -60,7 +38,6 @@ const addCart = (id: number) => {
   console.log(`Carrinho: Livro selecionado: ${id}`);
 };
 
->>>>>>> favoritos
 const Home = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const {dadosUsuario} = useContext(DataContext);
@@ -79,32 +56,21 @@ const Home = ({navigation}) => {
     getAllLivros();
   }, []);
 
-<<<<<<< HEAD
+
   const CardLivro = ({item}) => {
     return (
       <Card style={styles.cardLivro}>
         <Card.Title
           title={item.nomeLivro}
-          subtitle={item.editoraDTO.nomeEditora}
-        />
-        <TouchableOpacity onPress={() => navigateToLivro(item.codigoLivro)}>
-          {/* <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} /> */}
-          <Image
-            source={{uri: item.urlImagem}}
-            style={styles.itemLivro}></Image>
-        </TouchableOpacity>
+          subtitle={item.editoraDTO.nomeEditora} />
+          <TouchableOpacity onPress={() => navigateToLivro(item.codigoLivro)}>
+        <Card.Cover source={{uri: item.urlImagem}} style={styles.itemLivro} />
+          </TouchableOpacity>
         <Card.Actions style={{justifyContent: 'center'}}>
           <Button onPress={() => addFavorite(item)}>
             <Ionicons name="heart-circle" color="#2a8ba1" size={36} />
           </Button>
-          <Button
-            onPress={() =>
-              aumentarQuantidade(
-                item.codigoLivro,
-                item.urlImagem,
-                item.nomeLivro,
-              )
-            }>
+          <Button onPress={() => addCart(item.codigoLivro)}>
             <Ionicons name="cart" color="#2a8ba1" size={36} />
           </Button>
         </Card.Actions>
@@ -112,8 +78,6 @@ const Home = ({navigation}) => {
     );
   };
 
-=======
->>>>>>> favoritos
   //get EDITORAS
   const getAllEditoras = async () => {
     setLoading(true);
@@ -139,6 +103,11 @@ const Home = ({navigation}) => {
     navigation.navigate('Home Editora', {editoraId: id});
   };
 
+  const navigateToLivro = (id: any) => {
+    setSelectedLivro(id);
+    navigation.navigate('Home Livro', { codigoLivro: id });
+}
+
   //get LIVROS
   const getAllLivros = async () => {
     setLoading(true);
@@ -149,28 +118,27 @@ const Home = ({navigation}) => {
       .then(resultado => {
         //console.log('Dados dos Livros: ' + JSON.stringify(resultado.data));
 
-        resultado.data.map((key: any, indice: number) =>
-          setDadosLivro(dadosLivro => [
-            ...dadosLivro,
-            {
-              codigoLivro: key.codigoLivro,
-              nomeLivro: key.nomeLivro,
-              dataLancamento: key.dataLancamento,
-              codigoIsbn: key.codigoIsbn,
-              nomeImagem: key.nomeImagem,
-              nomeArquivoImagem: key.nomeArquivoImagem,
-              urlImagem: key.urlImagem,
-              editoraDTO: {
-                codigoEditora: key.editoraDTO.codigoEditora,
-                nomeEditora: key.editoraDTO.nomeEditora,
-              },
-              autorDTO: {
-                codigoAutor: key.autorDTO.codigoAutor,
-                nomeAutor: key.autorDTO.nomeAutor,
-              },
-            },
-          ]),
-        );
+        setDadosLivro([]);
+      let arrayLivros = resultado.data;
+      arrayLivros.map(key => (
+        setDadosLivro(current => [...current, {
+          codigoLivro: key.codigoLivro,
+          nomeLivro: key.nomeLivro,
+          dataLancamento: key.dataLancamento,
+          codigoIsbn: key.codigoIsbn,
+          nomeImagem: key.nomeImagem,
+          nomeArquivoImagem: key.nomeArquivoImagem,
+          urlImagem: key.urlImagem,
+          editoraDTO: {
+            codigoEditora: key.editoraDTO.codigoEditora,
+            nomeEditora: key.editoraDTO.nomeEditora,
+          },
+          autorDTO: {
+            codigoAutor: key.autorDTO.codigoAutor,
+            nomeAutor: key.autorDTO.nomeAutor,
+          }
+        }])
+      ));
 
         //colocando um timeout pra requiisção completar ou falhar
         setTimeout(() => {

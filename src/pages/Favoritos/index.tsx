@@ -81,17 +81,14 @@ const Favoritos = () =>{
         <ImageBackground
         source={require('../../assets/image-background.jpg')}
         style={styles.imageBackground}>
-     <ScrollView  style={styles.container}>
+     <View  style={{paddingBottom: 120}}>
         <FlatList
           data={data}
           renderItem={CardLivro}
           keyExtractor={(item, indice) => indice}
           horizontal={false}
         />
-        <View style={styles.destaque}>
-           
-        </View>
-      </ScrollView>
+      </View>
     </ImageBackground>
 
     )
