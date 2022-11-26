@@ -15,39 +15,6 @@ const storeLocalData = async (key:string, value:any) => {
 }
 
 //Incrementa os dados no localstorage, de uma determinada key
-const incrementLocalDataOld = async (key:string, value:any) => {
-  var actualData:any = null;
-  var data = [];
-  //await clearStorage(); //limpa todos os dados atuais da key especificada. Usar para fins de teste
-  try {
-    //recupera os dados da key existentes atualmente
-    actualData = await retrieveLocalData(key);
-    //converte os dados, de JSON para objeto Javascript
-    actualData = JSON.parse(actualData);
-    //console.log(`actualData: ${JSON.stringify(actualData, null, '\t')}`);
-    
-    if (actualData !== undefined && actualData !== null) {
-      //armazena os dados existentes atualmente no array data
-      data.push(actualData);
-
-      //transforma os dados recebidos pelo metodo num objeto JS
-      value = JSON.parse(JSON.stringify(value))
-      
-      //adiciona os novos dados, recebidos, no array data, incrementando-os aos existentes atualmente
-      data.push(value);
-
-      //grava todos os dados, os atuais mais os novos, no storage
-      storeLocalData(key, data);
-    }else{
-      //quando chamado pela primeira vez, caso nao exista ainda dados pra key, os armazena
-      storeLocalData(key, value);
-    }
-  } catch (error) {
-    console.log(`Erro ao recuperar dados (key: ${key}) do LocalStorage: ${error}`);
-  }
-}
-
-//Incrementa os dados no localstorage, de uma determinada key
 const incrementLocalData = async (key:string, value:any) => {
   var actualData:any = null;
   var data = [];
@@ -119,10 +86,10 @@ const removeFromFavoritosByKeyAndValue = async (key:string, codigoLivro:any) =>{
   try {
     //recupera os dados da key existentes atualmente
     arrayJsonFavoritos = await retrieveLocalData(key);
-    
+
     //converte os dados de JSON para objeto Javascript
     arrayJsFavoritos = JSON.parse(arrayJsonFavoritos);
-    
+
     //Percorre o array JS, filtrando o seu conteúdo e criando um novo array sem
     //  o elemento do array que contem o codigoLivro igual ao fornecido ao metodo
     arrayJsAlteradoFavoritos = arrayJsFavoritos.filter(function(e){
@@ -144,4 +111,4 @@ const clearStorage = async () => {
   }
 }
 
-export {storeLocalData, incrementLocalData, retrieveLocalData, removeLocalData, clearStorage, removeFromFavoritosByKeyAndValue};
+export { storeLocalData, incrementLocalData, retrieveLocalData, removeLocalData };
